@@ -1,7 +1,6 @@
-#include "logic_game.h"
-#include "logic_menu.h"
+#include "logic.h"
 
 int main(){
-
+    game_init();
     return 0;
 }

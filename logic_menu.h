@@ -1,8 +1,7 @@
 #ifndef LOGIC_MENU_H
 #define LOGIC_MENU_H
 
-#include "render_menu.h"
-
-void menu_main_init();
+void menu_main (Game &game);
+void menu_help ();
 
 #endif // LOGIC_MENU_H

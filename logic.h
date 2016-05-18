@@ -1,5 +1,5 @@
-#ifndef LOGIC_GAME_H
-#define LOGIC_GAME_H
+#ifndef LOGIC_H
+#define LOGIC_H
 
 #define UP 0
 #define RIGHT 1
@@ -32,4 +32,7 @@ void game_init();
 void game_count_freecells(Game &game);
 void game_main (Game &game);
 
-#endif // LOGIC_GAME_H
+void menu_main (Game &game);
+void menu_help ();
+
+#endif // LOGIC_H
