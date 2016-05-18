@@ -19,18 +19,22 @@ struct Fr{
 };
 
 struct Game {
+    long long score;
     int **cells;
     int head_x, head_y;
+    int end_x, end_y;
     int head_dir;
     int snake_size;
     int food_x, food_y;
     int count_freecells;
+    bool win;
     Fr freecells[GAME_SIZE*GAME_SIZE];
 };
 
 void game_init();
 void game_count_freecells(Game &game);
 void game_main (Game &game);
+void game_create_food(Game &game);
 
 void menu_main (Game &game);
 void menu_help ();
