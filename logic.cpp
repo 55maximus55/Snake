@@ -132,7 +132,7 @@ void game_pause(Game &game){
             else {
                 cursor++;
             }
-            draw_pause(game, cursor);
+            draw_pause (game, cursor);
         }
         if (GetAsyncKeyState(VK_LEFT) != 0){
             if (cursor == 1 && game.speed < 10){
