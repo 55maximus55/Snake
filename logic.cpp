@@ -11,6 +11,7 @@ void game_init(){
     Sleep(4000);
     Game game;
     game.end = 0;
+    game.speed = 5;
     game.head_x = GAME_SIZE / 2;
     game.head_y = GAME_SIZE / 2;
     game.head_dir = RIGHT;
@@ -66,7 +67,7 @@ void game_main (Game &game){
     draw_game(game);
     do {
         game_control(game);
-        Sleep(100);
+        Sleep(game.speed * 50);
     } while (game.end == 0);
     game_end(game);
 }
@@ -85,7 +86,7 @@ void game_control(Game &game){
     if (GetAsyncKeyState(VK_LEFT) != 0){
         ctrl = LEFT;
     }
-    if (GetAsyncKeyState(VK_PAUSE) != 0){
+    if (GetAsyncKeyState(VK_ESCAPE) != 0){
         game_pause (game);
     }
 
@@ -106,7 +107,63 @@ void game_control(Game &game){
 }
 
 void game_pause(Game &game){
-
+    int cursor = 0;
+    bool pause = 1;
+    GetAsyncKeyState(VK_UP);
+    GetAsyncKeyState(VK_RIGHT);
+    GetAsyncKeyState(VK_DOWN);
+    GetAsyncKeyState(VK_LEFT);
+    GetAsyncKeyState(VK_RETURN);
+    draw_pause(game, cursor);
+    do {
+        if (GetAsyncKeyState(VK_UP) != 0){
+            if (cursor == 0){
+                cursor = 2;
+            }
+            else {
+                cursor --;
+            }
+            draw_pause(game, cursor);
+        }
+        if (GetAsyncKeyState(VK_DOWN) != 0){
+            if (cursor == 2){
+                cursor = 0;
+            }
+            else {
+                cursor++;
+            }
+            draw_pause(game, cursor);
+        }
+        if (GetAsyncKeyState(VK_LEFT) != 0){
+            if (cursor == 1 && game.speed < 10){
+                game.speed++;
+                draw_pause(game, cursor);
+            }
+        }
+        if (GetAsyncKeyState(VK_RIGHT) != 0){
+            if (cursor == 1 && game.speed > 1){
+                game.speed--;
+                draw_pause(game, cursor);
+            }
+        }
+        if (GetAsyncKeyState(VK_RETURN) != 0){
+            if (cursor == 0){
+                pause = 0;
+            }
+            else if (cursor == 2){
+                pause = 0;
+                game.end = 1;
+                game.end_reason = END_EXIT;
+            }
+        }
+        Sleep(50);
+    } while (pause == 1);
+    GetAsyncKeyState(VK_UP);
+    GetAsyncKeyState(VK_RIGHT);
+    GetAsyncKeyState(VK_DOWN);
+    GetAsyncKeyState(VK_LEFT);
+    GetAsyncKeyState(VK_RETURN);
+    GetAsyncKeyState(VK_ESCAPE);
 }
 
 void game_move (Game &game){
@@ -363,10 +420,21 @@ void menu_main (Game &game){
         }
         if (GetAsyncKeyState(VK_RETURN) != 0){
             if (cursor == 0){
+                GetAsyncKeyState(VK_UP);
+                GetAsyncKeyState(VK_RIGHT);
+                GetAsyncKeyState(VK_DOWN);
+                GetAsyncKeyState(VK_LEFT);
+                GetAsyncKeyState(VK_ESCAPE);
                 game_main (game);
+                GetAsyncKeyState(VK_UP);
+                GetAsyncKeyState(VK_DOWN);
+                GetAsyncKeyState(VK_RETURN);
             }
             else if (cursor == 1){
                 menu_help ();
+                GetAsyncKeyState(VK_UP);
+                GetAsyncKeyState(VK_DOWN);
+                GetAsyncKeyState(VK_RETURN);
             }
             else if (cursor == 2){
                 cursor = 3;

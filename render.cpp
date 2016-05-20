@@ -3,8 +3,6 @@
 #include <iostream>
 #include <cstdlib>
 
-#include "logic.h"
-
 using namespace std;
 
 void draw_game (Game &game){
@@ -98,4 +96,39 @@ void draw_game_end (Game &game){
         cout << "You leaved the game." << endl;
         cout << "Your snake size: " << game.snake_size << endl;
     }
+}
+
+void draw_pause(Game &game, int cursor){
+    system("cls");
+    cout << "Pause" << endl;
+    if (cursor == 0){
+        cout << (char)(4);
+    }
+    else {
+        cout << ' ';
+    }
+    cout << "Continue" << endl;
+    if (cursor == 1){
+        cout << (char)(4);
+    }
+    else {
+        cout << ' ';
+    }
+    cout << "Speed <";
+    for (int i = 10; i > 0; i--){
+        if (game.speed != i){
+            cout << (char)(-51);
+        }
+        else {
+            cout << (char)(-37);
+        }
+    }
+    cout << '>' << endl;
+    if (cursor == 2){
+        cout << (char)(4);
+    }
+    else {
+        cout << ' ';
+    }
+    cout << "Exit to main menu" << endl;
 }

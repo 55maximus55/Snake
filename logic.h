@@ -28,6 +28,7 @@ struct Fr{
 
 struct Game {
     int **cells;
+    int speed;
     int head_x, head_y;
     int end_x, end_y;
     int head_dir;
