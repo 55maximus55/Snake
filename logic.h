@@ -27,7 +27,6 @@ struct Fr{
 };
 
 struct Game {
-    long long score;
     int **cells;
     int head_x, head_y;
     int end_x, end_y;

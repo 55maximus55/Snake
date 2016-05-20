@@ -40,7 +40,6 @@ void draw_game (Game &game){
     }
     cout << (char)(-68) << endl;
 
-    cout << "Score: " << game.score << endl;
     cout << "Size:  " << game.snake_size << endl;
 }
 
