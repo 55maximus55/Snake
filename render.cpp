@@ -83,6 +83,19 @@ void draw_main_menu(int cursor){
 
 void draw_help_menu(){
     system ("cls");
-    //cout << "The player controls a dot, square, or object on a bordered plane. As it moves forward, it leaves a trail behind, resembling a moving snake. In some games, the end of the trail is in a fixed position, so the snake continually gets longer as it moves. In another common scheme, the snake has a specific length, so there is a moving tail a fixed number of units away from the head. The player loses when the snake runs into the screen border, a trail, or another obstacle.";
+}
 
+void draw_game_end (Game &game){
+    system("cls");
+    if (game.end_reason == END_GAME_OVER){
+        cout << "Game over!" << endl;
+        cout << "Your snake size: " << game.snake_size << endl;
+    }
+    else if (game.end_reason == END_WIN){
+        cout << "You win!" << endl;
+    }
+    else {
+        cout << "You leaved the game." << endl;
+        cout << "Your snake size: " << game.snake_size << endl;
+    }
 }
