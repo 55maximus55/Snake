@@ -50,7 +50,6 @@ void game_count_freecells(Game &game){
     }
     game.count_freecells = count;
 }
-
 void game_create_food(Game &game){
     game_count_freecells(game);
     if (game.count_freecells == 0){
@@ -181,6 +180,12 @@ void game_move (Game &game){
                 game.snake_size++;
                 game_create_food(game);
             }
+            else if (game.head_x == game.end_x && game.end_y == GAME_SIZE - 1){
+                game_move_end(game);
+                eat = 1;
+                game.cells[game.head_x][game.head_y] = CELL_SNAKE_UP;
+                game.cells[game.head_x][GAME_SIZE - 1] = CELL_SNAKE_HEAD;
+            }
             else {
                 eat = 1;
                 game.end = 1;
@@ -199,6 +204,12 @@ void game_move (Game &game){
                 eat = 1;
                 game.snake_size++;
                 game_create_food(game);
+            }
+            else if (game.head_x == game.end_x && game.end_y == game.head_y - 1){
+                game_move_end(game);
+                eat = 1;
+                game.cells[game.head_x][game.head_y] = CELL_SNAKE_UP;
+                game.cells[game.head_x][game.head_y - 1] = CELL_SNAKE_HEAD;
             }
             else {
                 eat = 1;
@@ -221,6 +232,12 @@ void game_move (Game &game){
                 game.snake_size++;
                 game_create_food(game);
             }
+            else if (game.head_y == game.end_y && game.end_x == 0){
+                game_move_end(game);
+                eat = 1;
+                game.cells[game.head_x][game.head_y] = CELL_SNAKE_RIGHT;
+                game.cells[0][game.head_y] = CELL_SNAKE_HEAD;
+            }
             else {
                 eat = 1;
                 game.end = 1;
@@ -239,6 +256,12 @@ void game_move (Game &game){
                 eat = 1;
                 game.snake_size++;
                 game_create_food(game);
+            }
+            else if (game.head_y == game.end_y && game.end_x == game.head_x + 1){
+                game_move_end(game);
+                eat = 1;
+                game.cells[game.head_x][game.head_y] = CELL_SNAKE_RIGHT;
+                game.cells[game.head_x + 1][game.head_y] = CELL_SNAKE_HEAD;
             }
             else {
                 eat = 1;
@@ -261,6 +284,12 @@ void game_move (Game &game){
                 game.snake_size++;
                 game_create_food(game);
             }
+            else if (game.head_x == game.end_x && game.end_y == 0){
+                game_move_end(game);
+                eat = 1;
+                game.cells[game.head_x][game.head_y] = CELL_SNAKE_DOWN;
+                game.cells[game.head_x][0] = CELL_SNAKE_HEAD;
+            }
             else {
                 eat = 1;
                 game.end = 1;
@@ -279,6 +308,12 @@ void game_move (Game &game){
                 eat = 1;
                 game.snake_size++;
                 game_create_food(game);
+            }
+            else if (game.head_x == game.end_x && game.end_y == game.head_y + 1){
+                game_move_end(game);
+                eat = 1;
+                game.cells[game.head_x][game.head_y] = CELL_SNAKE_DOWN;
+                game.cells[game.head_x][game.head_y + 1] = CELL_SNAKE_HEAD;
             }
             else {
                 eat = 1;
@@ -301,6 +336,12 @@ void game_move (Game &game){
                 game.snake_size++;
                 game_create_food(game);
             }
+            else if (game.head_y == game.end_y && game.end_x == GAME_SIZE - 1){
+                game_move_end(game);
+                eat = 1;
+                game.cells[game.head_x][game.head_y] = CELL_SNAKE_LEFT;
+                game.cells[GAME_SIZE - 1][game.head_y] = CELL_SNAKE_HEAD;
+            }
             else {
                 eat = 1;
                 game.end = 1;
@@ -319,6 +360,12 @@ void game_move (Game &game){
                 eat = 1;
                 game.snake_size++;
                 game_create_food(game);
+            }
+            else if (game.head_y == game.end_y && game.end_x == game.head_x - 1){
+                game_move_end(game);
+                eat = 1;
+                game.cells[game.head_x][game.head_y] = CELL_SNAKE_LEFT;
+                game.cells[game.head_x - 1][game.head_y] = CELL_SNAKE_HEAD;
             }
             else {
                 eat = 1;
@@ -374,9 +421,44 @@ void game_move (Game &game){
     draw_game(game);
 }
 
+void game_move_end (Game &game){
+    if (game.cells[game.end_x][game.end_y] == CELL_SNAKE_UP){
+        if (game.end_y == 0){
+            game.end_y = GAME_SIZE - 1;
+        }
+        else {
+            game.end_y--;
+        }
+    }
+    else if (game.cells[game.end_x][game.end_y] == CELL_SNAKE_RIGHT){
+        if (game.end_x == GAME_SIZE - 1){
+            game.end_x = 0;
+        }
+        else {
+            game.end_x++;
+        }
+    }
+    else if (game.cells[game.end_x][game.end_y] == CELL_SNAKE_DOWN){
+        if (game.end_y == GAME_SIZE - 1){
+            game.end_y = 0;
+        }
+        else {
+            game.end_y++;
+        }
+    }
+    else {
+        if (game.end_x == 0){
+            game.end_x = GAME_SIZE - 1;
+        }
+        else {
+            game.end_x--;
+        }
+    }
+}
+
 void game_end (Game &game){
     draw_game_end (game);
-    Sleep(5000);
+    Sleep(3000);
     game.end = 0;
     game.head_x = GAME_SIZE / 2;
     game.head_y = GAME_SIZE / 2;
@@ -384,6 +466,7 @@ void game_end (Game &game){
     game.snake_size = START_SNAKE_SIZE;
     game.end_x = game.head_x - START_SNAKE_SIZE + 1;
     game.end_y = game.head_y;
+    game.speed = 5;
     for (int y = 0; y < GAME_SIZE; y++){
         for (int x = 0; x < GAME_SIZE; x++){
             game.cells[x][y] = CELL_EMPTY;
@@ -399,6 +482,9 @@ void game_end (Game &game){
 void menu_main (Game &game){
     int cursor = 0;
     draw_main_menu(cursor);
+    GetAsyncKeyState(VK_UP);
+    GetAsyncKeyState(VK_DOWN);
+    GetAsyncKeyState(VK_RETURN);
     do {
         if (GetAsyncKeyState(VK_UP) != 0){
             if (cursor == 0){

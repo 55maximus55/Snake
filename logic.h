@@ -47,6 +47,7 @@ void game_create_food     (Game &game);
 void game_control         (Game &game);
 void game_pause           (Game &game);
 void game_move            (Game &game);
+void game_move_end        (Game &game);
 void game_end             (Game &game);
 
 void menu_main (Game &game);
